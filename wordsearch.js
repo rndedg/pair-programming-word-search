@@ -1,8 +1,41 @@
-const wordSearch = (letters, word) => { 
-    const horizontalJoin = letters.map(ls => ls.join(''))
-    for (l of horizontalJoin) {
-        if (l.includes(word)) return true
+const transpose = function(letters) {
+  // Put your solution here
+  let result = [];
+  for (let i = 0; i < letters[0].length; i++) {
+    let innerArr = [];
+    for (let j = 0; j < letters.length; j++) {
+      innerArr.push(letters[j][i]);
     }
-}
+    result.push(innerArr);
+  }
+  return result;
+};
 
-module.exports = wordSearch
+
+
+const wordSearch = (letters, word) => {
+  const verticalWords = transpose(letters);
+  const matrix = {
+    horizontalJoin: letters.map(ls => ls.join('')),
+    verticalJoin: verticalWords.map(ls => ls.join(''))
+
+  };
+
+
+  for (const searches in matrix) {
+    for (const ltrs of matrix[searches]) {
+      if (ltrs.includes(word)) {
+        return true;
+      }
+    }
+
+  }
+
+  return false;
+};
+
+
+
+
+
+module.exports = wordSearch;
